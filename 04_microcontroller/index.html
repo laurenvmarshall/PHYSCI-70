@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PHYSCI 70: Intro to Digital Fabrication </title>
+  <meta charset="utf-8">
+  <link href="./style.css" rel="stylesheet">
+</head>
+<body>
+
+
+<xmp theme="journal" style="display:none;">
+
+<style>
+h3 {
+  color: DeepPink;
+}
+h2 {
+  color: DeepBlue;
+  text-align: center;
+}
+
+</style>
+
+<div class="container-fluid">
+
+ ### Week 4: Programming a Microcontroller
+
+ <h2> My (pretty lousy) Attempt at Making My Kinetic Controller Do Very Basic Things
+
+</h2>
+
+ 
+ <img src="bad_circuit.PNG" alt="my ailing circ" width="300">
+ <br>
+
+</h2>
+      
+<p> <i> Dear Reader, I will work hard to make something better to put in this space than a tale of my woes, sorry! </i> <br>In a classic case of problems compounding, I started the microcontroller project needing to make my kinetic sculpture *actually work*. <br> <br>
+I ended up replacing the small motor I was using before with a larger motor and reprinting the base. The problem that was happening before appeared to be that the small motor couldn't cope with the additional resistance from the weight of the sculpture, so it was short-circuiting whenever I tried to use it.<br> <br>
+With the new motor, finally my kinetic statue worked! However, the hot glue ensemble was looking a bit precarious. I chose to ignore this :)
+ <br> <br>
+ <img src="spinning.GIF" alt="spinning sculpture finally spins" width="300">
+ <br> <br>
+ Next I move on to the code, and this is where my struggles started. I tried to recreate the code we wrote from class myself, and just kept running into a wall. Either I would get a bunch of errors:
+<br> <br>
+ <img src="failing.PNG" alt="failing" width="300">
+<img src="more_failing.PNG" alt="more failing" width="300"><br> <br>
+Or I would mess up the circuit and then not be sure if the problem was code related or circuit related :/ (I also tried to make a little circuit with the piezo to detect 'knocks' which was also hampered by my wiring issues. I think the fact I can't tell apart left from right means I need to focus a lot more when I'm wiring.)
+ <br>
+<img src="bad_circuit.PNG" alt="failing" width="300"> <br> <br>
+Eventually I was unable to solve the issues myself, so I took the contraption to section where Ibrahim went through my (incredibly simple) code and my circuit. He figured out that it was my wiring that was the issue, and we worked through rewiring the circuit. <br> <br>
+ <img src="ibrahimhack.PNG" alt="hacked" width="350">
+ <img src="ibrahimhack2.PNG" alt="hacked again" width="350"> 
+<br>
+<br>
+Finally the very very very simple code: 
+</p>
+ <pre>
+  <code>
+    void setup() {
+  pinMode(4, OUTPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  digitalWrite(4, HIGH); 
+  delay(2000);                     
+  digitalWrite(4, LOW);   
+  delay(1000);                       
+}
+  </code>
+</pre>
+<p2> The motor ended up working, and could run both my own v simple code and the example code we wrote in class. However, unfortunately, whilst I was working with Ibrahim my sculpture broke, and so the motor was just rotating without any fun attachment :( <br>
+Ibrahim suggested that instead of hot-gluing the statue again, which is clearly unweildy, I should print and design a new base, so please consider that forthcoming! </p2>
+</xmp>
+</body>
+
+<script src="https://strapdownjs.com/v/0.2/strapdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+
+</html>

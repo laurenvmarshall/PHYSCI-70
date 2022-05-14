@@ -32,20 +32,35 @@ img {
 
 <h1> The 3D Theramin</h1>
 <p1> 
-For my final project, I wanted to create a musical instrument of some sort. For a long time I have been fascinated with early electronic instruments like the Theramin: <br>
+For my final project, I wanted to create a musical instrument of some sort. For a long time I have been fascinated with early electronic instruments like the Theramin, an early sensor-based instrument which allows the performers to change volume and pitch parameters exclusively based on the distance between one's hand and the sensor.<br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/K6KbEnGnymk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
  <br> <br>
-First of all,  <a href="https://www.instructables.com/Make-Music-With-Stepper-Motors//">this is the tutorial I followed.</a> This tutorial required<br>
-- an A4988 driver <br>
-- My arduino uno <br>
-- a 10V power supply <br>
-- a breadbaord <br>
-— a capacitator <br> <br>
-I started out by assembling my circuit, which appeared as follows: 
- <img src="circ1.png" alt="my first circuit" width="600" class="center"> 
-It was a relatively straightforward assembly bar the 10V power supply—I was initially unsure about how to connect the rounded head to my breadboard.
+My initial goal was to explore the idea of making a theramin polyphonic: the original theramin only allows for one tone to be produced at a time owing to its setup assigning one parameter to each hand. I could not simply just remove the volume parameter and have pitch assigned to both hands: including volume is essential to making the instrument 'expressive' and gestural. It would also be cumbersome to turn sound on and off if both hands controlled pitch—a foot pedal would be the only reasonable way to do this, and would seem excessibly bulky. 
 <br> <br>
-To do so, I came to Kassia's office hours where she taught me to solder the appropriate plugs into my circuit. Here's what the soldering looked like (if I were to do it again I would have soldered the wires in from another direction so they didn't have to fold over!)
+While discussing this with Nathan and considering a variety of sensor options that could increase the parameters that could be controlled with each hand, he mentioned the option of a 3D capacitative sensor box.
+  <a href="https://www.instructables.com/DIY-3D-Controller/">The concept is based on this tutorial, where you can use the box to play tictactoe!</a><br>
+  To make my version of this project you will need
+- 2 amplifiers <br>
+- An arduino uno <br>
+- 3+ 10k resistors<br>
+- Cardboard <br>
+— A breadboard <br> 
+— Two speakers <br> 
+— Lots of wires and alligator clips <br> <br>
+
+Firstly I assembled a cardboard & foil box that is similar to the tutorial above. I knew I wanted to make a *slightly* more attractive and polished contraption for my final project, but I tested out the form of it with some scrap cardboard. Here's how it looked:
+<br>
+<video controls width="350">
+
+    <source src="protobox.mp4"
+            type="video/mp4">
+</video> <br>
+I figured out that if I created two of the 3D sensors back to back, I could use both hands to control 3 parameters! The would mean that, at the very least, each hand could control the full capacity of the original theramin (pitch, volume), as well as including an additional parameter, such as pan, delay, or something else all together. <br>
+<img src="protobox2.jpg" alt="the prototype" width="600" class="center"> 
+<br> <br>
+Next I took to fusion 360 and designed an inclusive box form that could cater for both 3D sensing environments. I learned a lot about designing in Fusion from this process, mostly following these tutorials but adapting for the specific needs of my project. Essentialy I was creating a slot-together box with two faces, and then a divider in between. I also added two stand legs to elevate the box and give it a more polished look. 
+<iframe width="560" height="315" src="https://youtu.be/vT_FH3lL-3A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br> <br>
+<iframe width="560" height="315" src="https://youtu.be/7riGolu7BpA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <img src="solder.png" alt="My soldered power connection" width="400" class="center">  
 <br> <br>
 And here's the circuit plugged into the mains and my laptop:

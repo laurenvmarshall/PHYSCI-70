@@ -32,6 +32,9 @@ img {
 
 <h1> The 3D Theramin</h1>
 <p1> 
+  <b> Demo Video </b> <br> 
+<iframe width="800" height="400" src="https://www.youtube.com/embed/-oTCzAhE7pQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br> <br>
 For my final project, I wanted to create a musical instrument of some sort. For a long time I have been fascinated with early electronic instruments like the Theramin, an early sensor-based instrument which allows the performers to change volume and pitch parameters exclusively based on the distance between one's hand and the sensor.<br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/K6KbEnGnymk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
  <br> <br>
@@ -59,193 +62,110 @@ I figured out that if I created two of the 3D sensors back to back, I could use 
 <img src="protobox2.jpg" alt="the prototype" width="600" class="center"> 
 <br> <br>
 Next I took to fusion 360 and designed an inclusive box form that could cater for both 3D sensing environments. I learned a lot about designing in Fusion from this process, mostly following these tutorials but adapting for the specific needs of my project. Essentialy I was creating a slot-together box with two faces, and then a divider in between. I also added two stand legs to elevate the box and give it a more polished look. 
-<iframe width="560" height="315" src="https://youtu.be/vT_FH3lL-3A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br> <br>
-<iframe width="560" height="315" src="https://youtu.be/7riGolu7BpA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-
-  <img src="solder.png" alt="My soldered power connection" width="400" class="center">  
+<br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vT_FH3lL-3A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br> <br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7riGolu7BpA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br>
+This is how the model in Fusion 360 looked: <br>
+  <img src="design.png" alt="Fusion 360 design" width="400" class="center">  
 <br> <br>
-And here's the circuit plugged into the mains and my laptop:
-  <img src="circ2.png" alt="My completed circuit" width="400" class="center">  
+And here's how the cardboard looked after being lasercut:
+  <img src="barebox.jpg" alt="My completed box" width="400" class="center">  
 <br><br>
-The code I used to control the stepper is as follows:
+Download my STL files by clicking the image below: 
+<a href="POLYMIN.zip" download="polymin">
+  <img src="dload.png" alt="CLICK HERE <3" width="150">
+</a>
+Next, I needed to cut and attach the foil plates. I cut the foil plates to slightly smaller than my box dimensions (about 7 inches sq) and folded over the edges for a cohesive look. I then attached them with hot glue to my box form.
+  <img src="foil.jpg" alt="My completed box" width="400" class="center">  
+Then I began to build my circuit. I connected each plate with crocodile clips to a breadboard connected to my Arduino, with the 10 Ohm resistors. I then connected two amplifiers to two speakers. The final circuit was as such: <br>
+  <img src="finalcirc.jpg" alt="Final circuit" width="400" class="center">  
+<br>
+And here's how it wired up to the theramin:
+  <img src="firstcirc.jpg" alt="Final circuit" width="400" class="center">  
+Note: some tutorials I saw online did not use an amplifier to make different theramins: in my experience the sound production from the device was negligible until an amplifier (below) was connected.
+  <img src="amp.jpg" alt="Amp" width="400" class="center"> <br> 
 </p1>
 
+<p>
+Finally, I create the code. I used the cap sensor library that comes with Arduino, as well as a Volume library by Connor Nishijima which is available to download on the Arduino website. The latter library meant that I was able to set one parameter as volume, a function which the Arduino Tone() function alone is not able to do.
+<br><br>
+You can see in the code that it is designed for up to 5 plates: ultimately my demo features 3 plates, one controlling delay, one for pitch, and one for volume. However, the circuit can be duplicated to include more pitches, as long as the code is able to handle multiple tones at once, a feature which I have not yet explored.
+<br><br>
+Alternatively, one could reproduce the Arduino circuit with a second arduino to have the same functionality on both sides. The advantage of including a second Arduino is that the tone() function could be used on each microcontroller for a polyphonic effect, without complicated code. For the purposes of this project, however, I created a 3 parameter interface. <br><br>
+The code that I used is as follows:</p>
  <pre>
+
   <code>
-// defines pins numbers
-const int stepPin = 3; 
-const int dirPin = 4; 
+#include <Volume3.h>
+#include <CapacitiveSensor.h>
 
-// defines pins numbers
-const int stepPin = 3; 
-const int dirPin = 4; 
-
-// here comes a bunch of 'useful' vars; dont mind
-int coun;
-bool dir=0;
-int del;
-int c=1912;
-int cf=1805;
-int d= 1703;
-int df=1607;
-int e=1517;
-int f=1431;
-int ff=1351;
-int g= 1275;
-int gf=1203;
-int a=1136;
-int af=1072;
-int b=1012;
-int c1=floor(c/2);
-int cf1=floor(cf/2);
-int d1=floor(d/2);
-int df1=floor(df/2);
-int e1=floor(e/2);
-int f1=floor(1431/2);
-int ff1=floor(1351/2);
-int g1= floor(1275/2);
-int gf1=floor(1203/2);
-int a1=floor(1136/2);
-int af1=floor(1072/2);
-int b1=floor(1012/2);
-int e0=e*2;
-int g0=g*2;
-int b0=b*2;
-int af0=af*2;
-int a0=a*2;
-int f0=f*2;
-int use=180;
-int tempo=120;
-int oct=5;
+CapacitiveSensor capSensor1 = CapacitiveSensor(4,2);
+CapacitiveSensor capSensor2 = CapacitiveSensor(7,5);
+CapacitiveSensor capSensor3 = CapacitiveSensor(6,8);
+//CapacitiveSensor capSensor4 = CapacitiveSensor(3,11);
+//CapacitiveSensor capSensor5 = CapacitiveSensor(12,13);
 
 void setup() {
-  // Sets the two pins as Outputs
-  pinMode(stepPin,OUTPUT); 
-  pinMode(dirPin,OUTPUT);
+Serial.begin(9600);
 }
+
+
 void loop() {
-  oct=5;
-// Here you put your music code
-note(e1,250);
-note(e1,500);
-note(e1,250);
-pa(250);
-note(c1,250);
-note(e1,500);
-note(g1,1000);
-note(g,1000);
-note(c1,500);
-pa(250);
-note(g,250);
-pa(500);
-note(e,500);
-pa(250);
-note(a,250);
-pa(250);
-note(b,250);
-pa(250);
-note(af,250);
-note(a,500);
-note(g,330);
-note(e1,330);
-note(g1,330);
-note(a1,500);
-note(f1,250);
-note(g1,250);
-pa(250);
-note(e1,250);
-pa(250);
-note(c1,250);
-note(d1,250);
-note(b,250);
-pa(1000);
+  long sensorValue1 = capSensor1.capacitiveSensor(30);
+    long sensorValue2 = capSensor2.capacitiveSensor(30);
+      long sensorValue3 = capSensor3.capacitiveSensor(30);
+        //long sensorValue4 = capSensor4.capacitiveSensor(30);
+          //long sensorValue5 = capSensor5.capacitiveSensor(30);
+
+    Serial.print("Sensor1: ");
+    Serial.print(sensorValue1);
+    Serial.print("Sensor2: ");
+    Serial.println(sensorValue2);
+    Serial.print("Sensor3: ");
+    Serial.println(sensorValue3);
+    //Serial.print("Sensor4: ");
+    //Serial.println(sensorValue4);
+    //Serial.print("Sensor5: ");
+    //Serial.println(sensorValue5);
+    
+
+    int val1 = map(sensorValue1, 0, 5000, 50, 4000);
+    int val2 = map(sensorValue2, 0, 10000, 10, 1000);
+    int val3 = map(sensorValue3, 0, 100, 10, 1000);
+    //int val4 = map(sensorValue4, 0, 100, 10, 1000);
+    //int val5 = map(sensorValue5, 0, 100, 10, 1000);
+
+    //Serial.print("val 3: ");
+    //Serial.println(val3);
+
+    vol.tone(9,val1,20);
+    delay(val2);
+    //tone(8,val1,20);
+    //uint16_t volume = val3;
+    vol.noTone();
+    //delay(val2);
 
 
-// Rob scallon Rain.
-
-for (int i = 0; i < 3; i++){
-note(d,100);
-pa(use);
-note(f,100);
-pa(use);
-note(c1,100);
-pa(use);
-note(f,100);
-pa(use);}
-note(c1,100);
-pa(use);
-note(c1,100);
-pa(use);
-note(af,100);
-pa(use);
-note(a,100);
-pa(use);
-for (int i = 0; i < 3; i++){
-note(c,100);
-pa(use);
-note(e,100);
-pa(use);
-note(af,100);
-pa(use);
-note(e,100);
-pa(use);}
-note(af,100);
-pa(use);
-note(af,100);
-pa(use);
-note(a,100);
-pa(use);
-note(f,100);
-pa(use);
-for (int i = 0; i < 3; i++){
-note(d,100);
-pa(use);
-note(f,100);
-pa(use);
-note(af,100);
-pa(use);
-note(f,100);
-pa(use);}
-for (int i = 0; i < 3; i++){
-note(af0,100);
-pa(use);
-note(d,100);
-pa(use);
-note(f,100);
-pa(use);
-note(a,100);
-pa(use);}
-}
-void note(int num,long dur) {
-  del=(num*oct)/10;
-  dir=!dir;
- digitalWrite(dirPin,dir);
-  coun=floor((dur*5*tempo)/del);
-  for(int x = 0; x < coun; x++) {
-    digitalWrite(stepPin,HIGH);
-    delayMicroseconds(del);
-    digitalWrite(stepPin,LOW);
-    delayMicroseconds(del);
-  }
+    vol.tone(10,val1,20);
+    delay(val2);
+    vol.noTone();
+    //delay(val2);
 
 }
-
-void pa(int durp){
-  int ker=floor(durp/100)*tempo;
-delay(ker);
-  
-  }
-  
-  
-
   </code>
 </pre>
 
 <p2>
-This code allows you to input simple functions to control the stepper and produce pitched tones, as set out in the outset of the code. 
-<br> <br>
-I could adjust it using the function note(num,dur), with num defining the note I wanted it to play, and dur setting the duration of the note. pa(durp) would set out a pause between notes, with durp defining the duration of the pause in milliseconds. The variable 'tempo' could effect the speed overall.
+While the 4th and 5th pins are commented out in this code, they can easily be incorporated based on small adjustments to the circuit!
+<br>
+<br>
+<b> Reflections and Outlooks </b> <br> <br>
+As shown in the demo, the 3D Theramin does work, and the cap sensors were able to respond to some extend to hand gestures. However, I would later find that my circuit would only work if I grounded the circuit literally through my body, by holding firmly onto the Arduino. 
+<br>
+I also would come to find that producing polyphony using the tone() function alone is rather challenging—I would recommend that those aiming for polyphony consider using multiple/different microcontrollers.
+<br>
+While the cap sensor was a simple, fun and cheap way to detect hand movements, I would say that a more advanced and replicable version of this project might utilise a more advanced sensor, such as an Xbox kinect sensor. This all being said, the project is still a fun and interactive way to produce electronic sounds—and in my opinion some of the sound outputs are super cool, especially when sampled and further edited on a DAW!
 </p2>
 
 </xmp>

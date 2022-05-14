@@ -27,13 +27,6 @@ h2 {
 
  <h2> The Spiral
 
-
-</h2>
-
- 
- ![image of sketches](soundstone.png)
- <br>
-
 </h2>
 
 <p> I began with the idea of a barbershop’s spiralling sign, I was looking to create something that takes advantage of a simple motion to create an interesting visual effect!
@@ -49,7 +42,22 @@ Unfortunately something I did with the hot glue that is causing the motor to sho
  <img src="assembly.png" alt="assembly" width="500"> <img src="turns.gif" alt="failed turn" width="500">
 <br>
 <br>
+And here is the code I used:
+<pre>
+  <code>
+    void setup() {
+  pinMode(4, OUTPUT);
+}
 
+void loop() {
+  // put your main code here, to run repeatedly:
+  digitalWrite(4, HIGH); 
+  delay(2000);                     
+  digitalWrite(4, LOW);   
+  delay(1000);                       
+}
+  </code>
+</pre>
 </p>
  
 
